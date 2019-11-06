@@ -4,12 +4,12 @@ defmodule Libhoney.Mixfile do
   def project do
     [
       app: :libhoney,
-      version: "0.1.0",
-      elixir: "~> 1.5",
+      version: "0.2.0",
+      elixir: "~> 1.9",
       start_permanent: Mix.env == :prod,
       deps: deps(),
       name: "libhoney",
-      source_url: "https://github.com/carwow/libhoney-ex",
+      source_url: "https://github.com/driftrock/libhoney-ex",
       description: "A client for interacting with honeycomb.io",
       package: package()
     ]
@@ -25,7 +25,7 @@ defmodule Libhoney.Mixfile do
   defp deps do
     [
       {:poison, "~> 3.1"},
-      {:httpoison, "~> 0.13.0"},
+      {:httpoison, "~> 1.5"},
       {:bypass, "~> 0.8.1", only: :test},
       {:earmark, "~> 1.2", only: :dev},
       {:ex_doc, "~> 0.18.1", only: :dev}
@@ -35,9 +35,9 @@ defmodule Libhoney.Mixfile do
   defp package do
     [
       name: "libhoney",
-      maintainers: ["Baris Balic"],
+      maintainers: ["Federico Toscano"],
       licenses: ["MIT"],
-      links: %{"GitHub" => "https://github.com/carwow/libhoney-ex"}
+      links: %{"GitHub" => "https://github.com/driftrock/libhoney-ex"}
     ]
   end
 end
