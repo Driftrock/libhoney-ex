@@ -35,7 +35,7 @@ defmodule Libhoney.Mixfile do
   defp package do
     [
       name: "libhoney",
-      maintainers: ["Federico Toscano"],
+      maintainers: ["dev@driftrock.com"],
       licenses: ["MIT"],
       links: %{"GitHub" => "https://github.com/driftrock/libhoney-ex"}
     ]
