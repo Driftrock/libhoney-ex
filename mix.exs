@@ -5,7 +5,7 @@ defmodule Libhoney.Mixfile do
     [
       app: :libhoney,
       version: "0.2.0",
-      elixir: "~> 1.9",
+      elixir: "~> 1.8",
       start_permanent: Mix.env == :prod,
       deps: deps(),
       name: "libhoney",
@@ -28,7 +28,7 @@ defmodule Libhoney.Mixfile do
       {:httpoison, "~> 1.5"},
       {:bypass, "~> 0.8.1", only: :test},
       {:earmark, "~> 1.2", only: :dev},
-      {:ex_doc, "~> 0.18.1", only: :dev}
+      {:ex_doc, "~> 0.19", only: :dev}
     ]
   end
 

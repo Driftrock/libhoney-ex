@@ -3,11 +3,15 @@ defmodule Libhoney.Transmission do
 
   use GenServer
 
+  def init(args) do
+    {:ok, args}
+  end
+
   def start_link(state) do
     GenServer.start_link(__MODULE__, state, name: __MODULE__)
   end
 
-  def handle_cast({:send, %Libhoney.Event{} = event}, state) do
+  def handle_cast({:send, %Libhoney.Event{} = event}, _state) do
     Task.start(fn ->
       Libhoney.Client.create_event(event)
     end)
