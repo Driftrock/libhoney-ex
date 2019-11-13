@@ -3,12 +3,12 @@ defmodule Libhoney.Mixfile do
 
   def project do
     [
-      app: :libhoney,
-      version: "0.2.0",
+      app: :libhoney_ex,
+      version: "0.1.0",
       elixir: "~> 1.8",
       start_permanent: Mix.env == :prod,
       deps: deps(),
-      name: "libhoney",
+      name: "libhoney_ex",
       source_url: "https://github.com/driftrock/libhoney-ex",
       description: "A client for interacting with honeycomb.io",
       package: package()
@@ -34,7 +34,7 @@ defmodule Libhoney.Mixfile do
 
   defp package do
     [
-      name: "libhoney",
+      name: "libhoney_ex",
       maintainers: ["dev@driftrock.com"],
       licenses: ["MIT"],
       links: %{"GitHub" => "https://github.com/driftrock/libhoney-ex"}
