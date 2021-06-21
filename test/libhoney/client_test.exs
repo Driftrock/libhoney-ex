@@ -5,7 +5,7 @@ defmodule Libhoney.ClientTest do
 
   setup do
     bypass = Bypass.open
-    Application.put_env(:libhoney, :api_host, "http://localhost:#{bypass.port}")
+    Application.put_env(:libhoney_ex, :api_host, "http://localhost:#{bypass.port}")
 
     user_agent = "libhoney-ex/#{Libhoney.version}"
 
@@ -34,7 +34,7 @@ defmodule Libhoney.ClientTest do
       Plug.Conn.resp(conn, 200, "")
     end
 
-    Libhoney.Event.create("special_key", dataset, host, 1, 1512482188)
+    Libhoney.Event.create(write_key: "special_key", dataset: dataset, api_host: host, sample_rate: 1, timestamp: 1512482188)
     |> Libhoney.Event.add_field("name", "Rick Sanchez")
     |> Libhoney.Client.create_event
   end

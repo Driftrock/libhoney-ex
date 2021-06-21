@@ -16,11 +16,11 @@ defmodule Libhoney.Client do
   end
 
   def create_marker(marker, dataset) do
-    url = "#{Application.get_env(:libhoney, :api_host)}/1/markers/#{dataset}"
+    url = "#{Application.get_env(:libhoney_ex, :api_host)}/1/markers/#{dataset}"
     body = Poison.encode!(marker)
     headers =
       default_headers()
-      |> add_header({"X-Honeycomb-Team", Application.get_env(:libhoney, :write_key)})
+      |> add_header({"X-Honeycomb-Team", Application.get_env(:libhoney_ex, :write_key)})
 
     HTTPoison.post(url, body, headers)
   end

@@ -3,10 +3,13 @@ defmodule Libhoney.Event do
   Provides functions for manipulating `Event` structs.
   """
 
-  @os_module Application.get_env(:libhoney, :os_mock) || :os
+  @os_module Application.get_env(:libhoney_ex, :os_mock) || :os
 
-  @default_api_host Application.get_env(:libhoney, :api_host) || "https://api.honeycomb.io"
-  @default_sample_rate Application.get_env(:libhoney, :sample_rate) || 1
+  @default_write_key Application.get_env(:libhoney_ex, :write_key)
+  @default_dataset Application.get_env(:libhoney_ex, :dataset)
+  @default_api_host Application.get_env(:libhoney_ex, :api_host) || "https://api.honeycomb.io"
+  @default_api_host Application.get_env(:libhoney_ex, :api_host) || "https://api.honeycomb.io"
+  @default_sample_rate Application.get_env(:libhoney_ex, :sample_rate) || 1
 
   @enforce_keys [:write_key, :dataset, :api_host, :sample_rate, :timestamp]
   defstruct @enforce_keys ++ [fields: %{}]
@@ -14,11 +17,17 @@ defmodule Libhoney.Event do
   @doc """
   Returns an `Event` struct.  All parameters are optional and will be defaulted to those set
   in the mix config.
-      iex> Libhoney.Event.create("apples", "pears", "http://api.honeycomb.io", 1, 1512482945)
+      iex> Libhoney.Event.create(write_key: "apples", dataset: "pears", timestamp: 1512482945)
       %Libhoney.Event{api_host: "http://api.honeycomb.io", dataset: "pears",
         fields: %{}, sample_rate: 1, timestamp: 1512482945, write_key: "apples"}
   """
-  def create(write_key, dataset, api_host, sample_rate, timestamp) do
+  def create(opts \\ []) do
+    write_key = Keyword.get(opts, :write_key) || @default_write_key
+    dataset = Keyword.get(opts, :dataset) || @default_dataset
+    api_host = Keyword.get(opts, :api_host) || @default_api_host
+    sample_rate = Keyword.get(opts, :sample_rate) || @default_sample_rate
+    timestamp = Keyword.get(opts, :timestamp, @os_module.system_time(:seconds))
+
     %Libhoney.Event{
       write_key: write_key,
       dataset: URI.encode(dataset),
@@ -27,28 +36,10 @@ defmodule Libhoney.Event do
       timestamp: timestamp
     }
   end
-  def create(write_key, dataset, api_host, sample_rate) do
-    create(write_key, dataset, api_host, sample_rate, @os_module.system_time(:seconds))
-  end
-  def create(write_key, dataset, api_host) do
-    create(write_key, dataset, api_host, @default_sample_rate,  @os_module.system_time(:seconds))
-  end
-  def create(write_key, dataset) do
-    create(write_key, dataset, @default_api_host, @default_sample_rate,  @os_module.system_time(:seconds))
-  end
-  def create(write_key) do
-    dataset = Application.get_env(:libhoney, :dataset)
-    create(write_key, dataset, @default_api_host, @default_sample_rate,  @os_module.system_time(:seconds))
-  end
-  def create do
-    dataset = Application.get_env(:libhoney, :dataset)
-    write_key = Application.get_env(:libhoney, :write_key)
-    create(write_key, dataset, @default_api_host, @default_sample_rate,  @os_module.system_time(:seconds))
-  end
 
   @doc """
   Returns an `Event` struct with a key/value pair added to the fields.
-      iex> evt = Libhoney.Event.create("apples", "pears", "http://api.honeycomb.io", 1, 1512482945)
+      iex> Libhoney.Event.create(write_key: "apples", dataset: "pears", timestamp: 1512482945)
       iex> evt |> Libhoney.Event.add_field("name", "Rick Anchez")
       %Libhoney.Event{api_host: "http://api.honeycomb.io", dataset: "pears",
         fields: %{"name" => "Rick Sanchez"}, sample_rate: 1, timestamp: 1512482945, write_key: "apples"}

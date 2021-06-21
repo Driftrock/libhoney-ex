@@ -4,7 +4,7 @@ defmodule Libhoney.Mixfile do
   def project do
     [
       app: :libhoney_ex,
-      version: "0.1.0",
+      version: "0.2.0",
       elixir: "~> 1.8",
       start_permanent: Mix.env == :prod,
       deps: deps(),
@@ -24,7 +24,7 @@ defmodule Libhoney.Mixfile do
 
   defp deps do
     [
-      {:poison, "~> 3.1"},
+      {:poison, "~> 4.0"},
       {:httpoison, "~> 1.5"},
       {:bypass, "~> 0.8.1", only: :test},
       {:earmark, "~> 1.2", only: :dev},
