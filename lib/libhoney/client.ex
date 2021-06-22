@@ -11,6 +11,7 @@ defmodule Libhoney.Client do
       default_headers()
       |> add_header({"X-Honeycomb-Team", event.write_key})
       |> add_header({"X-Honeycomb-Samplerate", event.sample_rate})
+      |> add_header({"X-Honeycomb-Event-Time", event.timestamp})
 
     HTTPoison.post(url, body, headers)
   end
